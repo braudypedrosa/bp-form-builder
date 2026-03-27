@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form Builder</title>
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <h1>Form Builder</h1>
+      <div class="header-actions">
+        <button id="btn-undo" class="btn btn-ghost" title="Undo (Ctrl+Z)"><i data-lucide="undo-2"></i></button>
+        <button id="btn-redo" class="btn btn-ghost" title="Redo (Ctrl+Y)"><i data-lucide="redo-2"></i></button>
+        <button id="btn-preview" class="btn btn-secondary"><i data-lucide="eye"></i> Preview</button>
+        <button id="btn-export" class="btn btn-primary"><i data-lucide="download"></i> Export JSON</button>
+      </div>
+    </header>
+
+    <main class="builder-layout">
+      <!-- Left: Field Palette -->
+      <aside class="field-palette">
+        <h2>Fields</h2>
+        <div class="palette-section">
+          <h3>Basic</h3>
+          <div id="palette-basic" class="palette-list"></div>
+        </div>
+        <div class="palette-section">
+          <h3>Advanced</h3>
+          <div id="palette-advanced" class="palette-list"></div>
+        </div>
+        <div class="palette-section">
+          <h3>Layout</h3>
+          <div id="palette-layout" class="palette-list"></div>
+        </div>
+      </aside>
+
+      <!-- Center: Canvas -->
+      <section class="form-canvas">
+        <div id="canvas" class="canvas-drop-zone">
+          <div class="canvas-placeholder">Drag fields here to build your form</div>
+        </div>
+      </section>
+
+      <!-- Right: Field Settings -->
+      <aside class="field-settings">
+        <h2>Settings</h2>
+        <div id="settings-panel">
+          <p class="settings-placeholder">Select a field to edit its settings</p>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Preview Modal -->
+  <div id="preview-modal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Form Preview</h2>
+        <button id="btn-close-preview" class="btn-close">&times;</button>
+      </div>
+      <div id="preview-form" class="preview-form"></div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

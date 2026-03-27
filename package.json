@@ -1,0 +1,24 @@
+{
+  "name": "form-builder",
+  "version": "1.0.0",
+  "description": "A standalone drag-and-drop form builder with column layouts, conditional logic, and validation",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Braudy Pedrosa",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/sortablejs": "^1.15.9",
+    "sortablejs": "^1.15.7",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.3"
+  },
+  "dependencies": {
+    "lucide": "^1.7.0"
+  }
+}
