@@ -9,6 +9,12 @@ export interface ConditionalRule {
   value: string;
 }
 
+export interface EmailOptions {
+  allowedDomains?: string;       // comma-separated list of allowed domains
+  blockDisposable?: boolean;     // block disposable email providers
+  confirmEmail?: boolean;        // require user to re-type email
+}
+
 export interface ValidationRules {
   minLength?: number;
   maxLength?: number;
@@ -44,6 +50,8 @@ export interface FormField {
   content?: string;
   // For hidden field
   defaultValue?: string;
+  // For email field
+  emailOptions?: EmailOptions;
 }
 
 export interface FormRow {
@@ -120,6 +128,9 @@ export function createFormField(type: string): FormField {
   }
   if (type === 'hidden') {
     base.defaultValue = '';
+  }
+  if (type === 'email') {
+    base.emailOptions = {};
   }
 
   return base;

@@ -128,13 +128,23 @@ export function renderCanvasRow(row: FormRow): HTMLElement {
 function renderFieldPreview(field: FormField): string {
   switch (field.type) {
     case 'text':
-    case 'email':
     case 'phone':
     case 'number':
     case 'url':
     case 'password':
     case 'date':
       return `<input type="${field.type === 'phone' ? 'tel' : field.type}" placeholder="${escapeAttr(field.placeholder || field.label)}" />`;
+
+    case 'email': {
+      let emailHtml = `<input type="email" placeholder="${escapeAttr(field.placeholder || field.label)}" />`;
+      if (field.emailOptions?.confirmEmail) {
+        emailHtml += `<input type="email" placeholder="Confirm email" style="margin-top:4px" />`;
+      }
+      if (field.emailOptions?.allowedDomains) {
+        emailHtml += `<span style="font-size:10px;color:#9ca3af">Allowed: ${escapeHtml(field.emailOptions.allowedDomains)}</span>`;
+      }
+      return emailHtml;
+    }
 
     case 'textarea':
       return `<textarea placeholder="${escapeAttr(field.placeholder || field.label)}"></textarea>`;
@@ -216,13 +226,21 @@ export function renderPreviewField(field: FormField): string {
       return '';
 
     case 'text':
-    case 'email':
     case 'phone':
     case 'number':
     case 'url':
     case 'password':
     case 'date':
       return `<div class="preview-field"><label>${escapeHtml(field.label)}${req}</label><input type="${field.type === 'phone' ? 'tel' : field.type}" placeholder="${escapeAttr(field.placeholder)}" />${help}</div>`;
+
+    case 'email': {
+      let emailPreview = `<div class="preview-field"><label>${escapeHtml(field.label)}${req}</label><input type="email" placeholder="${escapeAttr(field.placeholder)}" />`;
+      if (field.emailOptions?.confirmEmail) {
+        emailPreview += `<input type="email" placeholder="Confirm ${escapeAttr(field.placeholder || 'email')}" style="margin-top:6px" />`;
+      }
+      emailPreview += `${help}</div>`;
+      return emailPreview;
+    }
 
     case 'textarea':
       return `<div class="preview-field"><label>${escapeHtml(field.label)}${req}</label><textarea placeholder="${escapeAttr(field.placeholder)}"></textarea>${help}</div>`;

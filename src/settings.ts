@@ -72,6 +72,25 @@ export function renderSettings(
           <input type="text" id="set-default" value="${escapeAttr(field.defaultValue || '')}" />
         </div>
       ` : ''}
+      ${field.type === 'email' ? `
+        <div class="settings-group">
+          <label>Allowed Domains</label>
+          <input type="text" id="set-email-domains" value="${escapeAttr(field.emailOptions?.allowedDomains || '')}" placeholder="e.g. gmail.com, company.com" />
+          <span class="settings-hint">Comma-separated. Leave empty to allow all.</span>
+        </div>
+        <div class="settings-group">
+          <label class="checkbox-row">
+            <input type="checkbox" id="set-email-disposable" ${field.emailOptions?.blockDisposable ? 'checked' : ''} />
+            Block disposable emails
+          </label>
+        </div>
+        <div class="settings-group">
+          <label class="checkbox-row">
+            <input type="checkbox" id="set-email-confirm" ${field.emailOptions?.confirmEmail ? 'checked' : ''} />
+            Require email confirmation
+          </label>
+        </div>
+      ` : ''}
       <div class="settings-group">
         <label>CSS Class</label>
         <input type="text" id="set-css" value="${escapeAttr(field.cssClass)}" placeholder="e.g. col-half" />
@@ -199,6 +218,27 @@ export function renderSettings(
     field.required = requiredInput.checked;
     onUpdate(field);
   });
+
+  // Email options bindings
+  if (field.type === 'email') {
+    bindInput(container, '#set-email-domains', (val) => {
+      if (!field.emailOptions) field.emailOptions = {};
+      field.emailOptions.allowedDomains = val || undefined;
+      onUpdate(field);
+    });
+    const disposableInput = container.querySelector('#set-email-disposable') as HTMLInputElement | null;
+    disposableInput?.addEventListener('change', () => {
+      if (!field.emailOptions) field.emailOptions = {};
+      field.emailOptions.blockDisposable = disposableInput.checked || undefined;
+      onUpdate(field);
+    });
+    const confirmInput = container.querySelector('#set-email-confirm') as HTMLInputElement | null;
+    confirmInput?.addEventListener('change', () => {
+      if (!field.emailOptions) field.emailOptions = {};
+      field.emailOptions.confirmEmail = confirmInput.checked || undefined;
+      onUpdate(field);
+    });
+  }
 
   // Options handling
   if (def?.hasOptions && field.options) {
